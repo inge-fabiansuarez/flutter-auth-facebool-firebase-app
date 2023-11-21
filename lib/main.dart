@@ -46,53 +46,54 @@ class _FacebookLoginScreenState extends State<FacebookLoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () async {
-                LoginResult result = await FacebookAuth.instance.login();
-                AccessToken? accessToken = result.accessToken;
+            if (_user == null)
+              ElevatedButton(
+                onPressed: () async {
+                  LoginResult result = await FacebookAuth.instance.login();
+                  AccessToken? accessToken = result.accessToken;
 
-                final AuthCredential credential =
-                    FacebookAuthProvider.credential(
-                  accessToken!.token,
-                );
-
-                try {
-                  final UserCredential userCredential =
-                      await FirebaseAuth.instance.signInWithCredential(
-                    credential,
+                  final AuthCredential credential =
+                      FacebookAuthProvider.credential(
+                    accessToken!.token,
                   );
-                  final User? user = userCredential.user;
 
-                  setState(() {
-                    _user = user;
-                  });
+                  try {
+                    final UserCredential userCredential =
+                        await FirebaseAuth.instance.signInWithCredential(
+                      credential,
+                    );
+                    final User? user = userCredential.user;
 
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Inicio de sesión exitoso como ${_user?.displayName}',
+                    setState(() {
+                      _user = user;
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Inicio de sesión exitoso como ${_user?.displayName}',
+                        ),
                       ),
-                    ),
-                  );
-                } catch (e) {
-                  print('Error al iniciar sesión con Facebook: $e');
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Error al iniciar sesión'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    );
+                  } catch (e) {
+                    print('Error al iniciar sesión con Facebook: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Error al iniciar sesión'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                child: Text(
+                  'Iniciar sesión con Facebook',
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
-              child: Text(
-                'Iniciar sesión con Facebook',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
             SizedBox(height: 20),
             if (_user != null)
               Column(
@@ -102,12 +103,11 @@ class _FacebookLoginScreenState extends State<FacebookLoginScreen> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 10),
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                      _user?.photoURL ?? '',
+                  if (_user!.photoURL != null)
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(_user!.photoURL!),
                     ),
-                  ),
                   SizedBox(height: 10),
                   Text(
                     'Nombre: ${_user?.displayName}',
@@ -120,6 +120,33 @@ class _FacebookLoginScreenState extends State<FacebookLoginScreen> {
                   Text(
                     'UID: ${_user?.uid}',
                     style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        await FirebaseAuth.instance.signOut();
+                        setState(() {
+                          _user = null;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Sesión cerrada correctamente'),
+                          ),
+                        );
+                      } catch (e) {
+                        print('Error al cerrar sesión: $e');
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    ),
+                    child: Text(
+                      'Cerrar sesión',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 ],
               ),
