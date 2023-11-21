@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">LoginFacApp</string>
-    <string name="facebook_app_id">1573567796714897</string>
-    <string name="fb_login_protocol_scheme">fb1573567796714897</string>
-    <string name="facebook_client_token">fc6a26ba427956687e181524df7f6cd6</string>
+    <string name="facebook_app_id">364292602636154</string>
+    <string name="fb_login_protocol_scheme">fb364292602636154</string>
+    <string name="facebook_client_token">77b2ea49f5cc7506090c86aab3dccd61</string>
 </resources>
