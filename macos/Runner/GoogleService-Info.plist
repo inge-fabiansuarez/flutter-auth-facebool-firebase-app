@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBNUPYwYgC5ZFgJrfuSwARgS395zEiDP_8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1080956540196</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.facebookAuthApp.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>facebookauthapp-46697</string>
+	<key>STORAGE_BUCKET</key>
+	<string>facebookauthapp-46697.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1080956540196:ios:2c329c9d393e4a4a714fb1</string>
+</dict>
+</plist>
